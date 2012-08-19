@@ -14,6 +14,7 @@ Install it on Debian/Ubuntu: $ su apt-get install python-cairo python-cairosvg
 You must set TTFont name in OpenERP config file, as below:
 
 ; Simsun is chinese font name, insteaded by your font(the font file must exist in you sys font path)
+
 pychart_ttfont_name = Simsun
 
 Have fun !
@@ -31,8 +32,9 @@ Debian/Ubuntu安装方法： $ su apt-get install python-cairo python-cairosvg
 可以在OpenERP中配置pychart 报表字体：
 
 ; 默认使用宋体，可以修改。注意字体文件必须存在系统字体目录下。
+
 pychart_ttfont_name = Simsun
 
-祝你好运 ~
+玩的开心 ~
 
 
