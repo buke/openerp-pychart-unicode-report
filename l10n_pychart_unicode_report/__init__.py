@@ -20,13 +20,19 @@
 import cairosvg
 import pychart
 import re
+import unicodedata
 
 import openerp.tools.config as config
 FONTNAME = config.get('pychart_ttfont_name', 'Simsun')
 
 def wrap_unaligned_get_dimension(func):
     def _func(*args, **kwds):
-        return func(args[0].decode('utf8') if type(args[0]) == str else args[0])
+        arg = args[0].decode('utf8') if type(args[0]) == str else args[0]
+        # add 2 char size to east asian char
+        for s in arg:
+            if unicodedata.east_asian_width(s) != 'Na':
+                arg = arg + u'  '
+        return func(arg)
     return _func
 pychart.font.unaligned_get_dimension = wrap_unaligned_get_dimension(pychart.font.unaligned_get_dimension)
 
@@ -51,10 +57,7 @@ def wrap_svgcanvas_close(func):
         svg = fio.getvalue()
         svg = re.sub(r'font-family:[\w]+;', 'font-family:%s;' % FONTNAME, svg)
         fio.truncate(0)
-        cairosvg.surface.PDFSurface.convert(
-                bytestring = svg,
-                write_to = fio,
-            )
+        cairosvg.surface.PDFSurface.convert(bytestring = svg, write_to = fio)
     return _func
 pychart.svgcanvas.T.close = wrap_svgcanvas_close(pychart.svgcanvas.T.close)
 
