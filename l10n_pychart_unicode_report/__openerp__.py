@@ -33,8 +33,10 @@ This module let pychart make report as svg file, then use cairosvg turn svg to p
 Depend on python-cairo & python-cairosvg.
 Install it on Debian/Ubuntu: $ su apt-get install python-cairo python-cairosvg
 
-You must set TTFont name in OpenERP config file, as below:
+If oecn_base_fonts is installed ,It would read oecn_base_fonts module font setting .
+or else it would read "pychart_ttfont_name" parameter from OpenERP config file.
 
+Such as TTFont name in OpenERP config file, as below:
 ; Simsun is chinese font name, insteaded by your font(the font file must exist in you sys font path)
 pychart_ttfont_name = Simsun
 
@@ -49,7 +51,8 @@ Have fun !
 依赖模块：python-cairo python-cairosvg
 Debian/Ubuntu安装方法： $ su apt-get install python-cairo python-cairosvg
 
-可以在OpenERP中配置pychart 报表字体：
+如果你安装了oecn_base_fonts模块，会自动读取oecn_base_fonts 的字体设置.
+否则将会读取 OpenERP 配置文件中的 pychart_ttfont_name 参数, 示例如下:
 ; 默认使用宋体，可以修改。注意字体文件必须存在系统字体目录下。
 pychart_ttfont_name = Simsun
 

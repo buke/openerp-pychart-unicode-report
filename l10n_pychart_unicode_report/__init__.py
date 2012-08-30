@@ -21,9 +21,8 @@ import cairosvg
 import pychart
 import re
 import unicodedata
-
 import openerp.tools.config as config
-FONTNAME = config.get('pychart_ttfont_name', 'Simsun')
+FONTNAME = None
 
 def wrap_unaligned_get_dimension(func):
     def _func(*args, **kwds):
@@ -55,10 +54,32 @@ def wrap_svgcanvas_close(func):
         func(*args, **kwds)
         fio = args[0]._T__out_fname
         svg = fio.getvalue()
-        svg = re.sub(r'font-family:[\w]+;', 'font-family:%s;' % FONTNAME, svg)
+        svg = re.sub(r'font-family:[\w]+;', 'font-family:%s;' % FONTNAME or config.get('pychart_ttfont_name', 'Simsun'), svg)
         fio.truncate(0)
         cairosvg.surface.PDFSurface.convert(bytestring = svg, write_to = fio)
     return _func
 pychart.svgcanvas.T.close = wrap_svgcanvas_close(pychart.svgcanvas.T.close)
+
+# read oe_cn_base_fonts setting
+from tools.safe_eval import safe_eval
+import openerp.addons.base.res.res_company as res_company
+def wrap_res_company_init(func):
+    def _func(*args, **kwds):
+        func(*args, **kwds)
+        global FONTNAME
+        try:
+            fonts_map = args[1].get('ir.config_parameter').get_param(args[2], 1, 'fonts_map')
+            fonts_map = (safe_eval(fonts_map))
+            if fonts_map.get('wrap', False):
+                FONTNAME = fonts_map['maps'][0][1].encode('utf-8')
+        except:
+            pass
+    return _func
+res_company.res_company.__init__ = wrap_res_company_init(res_company.res_company.__init__)
+
+
+
+
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
