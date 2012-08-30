@@ -15,7 +15,7 @@ Update
 ---------------
 python-cairo python-cairosvg
 
-Debian/Ubuntu安装方法： $ su apt-get install python-cairo python-cairosvg
+Debian/Ubuntu安装方法： $ sudo apt-get install python-cairo python-cairosvg
 
 字体配置
 ---------------
@@ -24,6 +24,7 @@ Debian/Ubuntu安装方法： $ su apt-get install python-cairo python-cairosvg
 否则将会读取 OpenERP 配置文件中的 pychart_ttfont_name 参数, 示例如下:
 
 ; 默认使用宋体，可以修改。注意字体文件必须存在系统字体目录下。
+
 pychart_ttfont_name = Simsun
 
 玩的开心 ~
