@@ -54,7 +54,7 @@ def wrap_svgcanvas_close(func):
         func(*args, **kwds)
         fio = args[0]._T__out_fname
         svg = fio.getvalue()
-        svg = re.sub(r'font-family:[\w]+;', 'font-family:%s;' % FONTNAME or config.get('pychart_ttfont_name', 'Simsun'), svg)
+        svg = re.sub(r'font-family:[\w]+;', 'font-family:%s;' % (FONTNAME or config.get('pychart_ttfont_name', 'Simsun'),), svg)
         fio.truncate(0)
         cairosvg.surface.PDFSurface.convert(bytestring = svg, write_to = fio)
     return _func

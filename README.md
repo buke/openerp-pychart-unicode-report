@@ -3,10 +3,12 @@ openerp-pychart-unicode-report
 
 Update
 ---------------
+2012-11-26  bug fix
 2012-08-30  增加读取oecn_base_fonts字体名
 
 简介
 ---------------
+支持 OpenERP 6.1 7.0 
 支持pychart中文报表，如“库存预测”、“工作中心负载” 等报表。
 
 本模块原理是先让pychart 生成svg 文件，然后用cairosvg 模块生成PDF报表。
